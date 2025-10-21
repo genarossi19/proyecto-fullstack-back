@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    /* === Estructura del proyecto === */
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    /* === Target y módulo === */
+    "target": "ES2020", // más compatible con Node
+    "module": "CommonJS", // más estable para Express
+    "esModuleInterop": true, // permite importar librerías como express sin errores
+    "moduleResolution": "node", // necesario para resolver imports correctamente
+
+    /* === Tipos y librerías === */
+    "lib": ["ES2020"],
+    "types": ["node"], // necesario para usar process, path, etc.
+    "skipLibCheck": true,
+
+    /* === Mapas y declaraciones === */
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    /* === Chequeo estricto === */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    /* === Otras === */
+    "resolveJsonModule": true, // para importar JSON
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
