@@ -1,0 +1,85 @@
+classDiagram
+    class Client {
+        +int id
+        +int CUIT
+        +string name
+        +string email
+        +string phone
+        +string address
+        +boolean active
+    }
+
+    class Field {
+        +int id
+        +string name
+        +float area
+        +float lat
+        +float long
+        +int clientId
+        +boolean active
+    }
+
+    class Lot {
+        +int id
+        +string name
+        +float area
+        +float lat
+        +float long
+        +boolean active
+        +int fieldId
+    }
+         class Service {
+        +int id
+        +string name
+    }
+
+    class WorkOrder {
+        +int id
+        +date created_at
+        +date init_date
+        +date finish_date
+        +string status
+        +string description
+        +int clientId
+        +int fieldId
+        +int serviceId
+        +int price
+    }
+
+
+    class MachineryDetail {
+        +int id
+        +int workOrderId
+        +int machineryId
+    }
+
+    class LotDetail {
+        +int id
+        +int workOrderId
+        +int lotId
+        +float area
+        +float lat
+        +float long
+
+    }
+
+
+    class Machinery {
+        +int id
+        +string name
+        +string type
+        +string brand
+        +string model
+        +string status
+    }
+
+    %% Relaciones
+    Client "1" --> "*" Field
+    Field "1" --> "*" Lot
+    Client "1" --> "*" WorkOrder
+    Field "1" --> "*" WorkOrder
+    WorkOrder "1" --> "*" LotDetail
+    WorkOrder "1" --> "*" MachineryDetail
+    Machinery "1" --> "*" MachineryDetail
+    Service "1" --> "*" WorkOrder
+    Lot "1" --> "*" LotDetail
