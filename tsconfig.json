@@ -5,31 +5,28 @@
     "outDir": "./dist",
 
     /* === Target y módulo === */
-    "target": "ES2020", // más compatible con Node
-    "module": "CommonJS", // más estable para Express
-    "esModuleInterop": true, // permite importar librerías como express sin errores
-    "moduleResolution": "node", // necesario para resolver imports correctamente
-
+    "target": "ES2020",
+    "module": "ES2020", // Compatible con type: module
+    "moduleResolution": "node",
+    "esModuleInterop": true, // Permite importar librerías como express
+    "resolveJsonModule": true, // Para importar JSON
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
     /* === Tipos y librerías === */
-    "lib": ["ES2020"],
-    "types": ["node"], // necesario para usar process, path, etc.
+    "strict": true, // Chequeo estricto
+    "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
+    "types": ["node", "express"],
 
     /* === Mapas y declaraciones === */
-    "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
+    "sourceMap": true,
 
-    /* === Chequeo estricto === */
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
-
-    /* === Otras === */
-    "resolveJsonModule": true, // para importar JSON
-    "isolatedModules": true,
-    "forceConsistentCasingInFileNames": true
+    /* === Otras útiles === */
+    "noImplicitAny": true
   },
-  "include": ["src"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }
