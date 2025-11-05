@@ -2,7 +2,7 @@ import express from "express";
 import type { Request, Response } from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
-
+import clientRoute from "./services/client/client.route.ts";
 // Configura dotenv
 dotenv.config();
 
@@ -20,6 +20,8 @@ app.use(morgan("dev"));
 app.get("/", (req: Request, res: Response) => {
   res.status(200).send("Hello World");
 });
+
+app.use("/api/client", clientRoute);
 
 // Inicia el servidor
 app

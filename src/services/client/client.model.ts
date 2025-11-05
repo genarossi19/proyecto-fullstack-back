@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../../db/sequelize";
+import sequelize from "../../db/sequelize.ts";
 
 const Client = sequelize.define(
   "Client",
@@ -18,7 +18,12 @@ const Client = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    email: DataTypes.STRING,
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: true,
+      },
+    },
     phone: DataTypes.STRING,
     address: DataTypes.STRING,
     active: {
@@ -31,4 +36,5 @@ const Client = sequelize.define(
     timestamps: false,
   }
 );
+
 export default Client;
