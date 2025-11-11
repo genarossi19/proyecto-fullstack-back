@@ -1,8 +1,9 @@
 // controllers/clientController.ts
 import type { Request, Response } from "express";
-import Client from "../client/client.model.ts";
+import Client from "./client.model.ts";
+import Field from "../field/field.model.ts";
 
-// Obtener todos los clientes
+// GET todos los clientes
 const getAllClients = async (req: Request, res: Response) => {
   try {
     const clients = await Client.findAll();
@@ -13,7 +14,26 @@ const getAllClients = async (req: Request, res: Response) => {
   }
 };
 
-// Obtener cliente por ID
+//GET Clientes individuales con objeto Field
+const getClientWithFields = async (req: Request, res: Response) => {
+  const clientId = req.params.id;
+
+  try {
+    const client = await Client.findByPk(clientId, {
+      include: [
+        { model: Field, as: "fields", attributes: { exclude: ["clientId"] } },
+      ],
+    });
+
+    if (!client) return res.status(404).json({ message: "Client not found" });
+
+    res.json(client);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+// GET cliente por  (sin objeto field)
 const getClientById = async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id, 10);
@@ -28,7 +48,7 @@ const getClientById = async (req: Request, res: Response) => {
   }
 };
 
-// Crear nuevo cliente
+// POST Crear nuevo cliente
 const createClient = async (req: Request, res: Response) => {
   try {
     const { cuit, name, email, phone, address, active } = req.body;
@@ -47,7 +67,7 @@ const createClient = async (req: Request, res: Response) => {
   }
 };
 
-// Actualizar cliente
+// PUT/PATCH Actualizar cliente
 const updateClient = async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id, 10);
@@ -65,7 +85,7 @@ const updateClient = async (req: Request, res: Response) => {
   }
 };
 
-// Eliminar cliente
+// DELETE Eliminar cliente
 const deleteClient = async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id, 10);
@@ -87,4 +107,5 @@ export default {
   createClient,
   updateClient,
   deleteClient,
+  getClientWithFields,
 };

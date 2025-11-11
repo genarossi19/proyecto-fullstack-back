@@ -3,6 +3,7 @@ import type { Request, Response } from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import clientRoute from "./services/client/client.route.ts";
+import fieldRoute from "./services/field/field.route.ts";
 // Configura dotenv
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/client", clientRoute);
+app.use("/api/field", fieldRoute);
 
 // Inicia el servidor
 app

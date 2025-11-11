@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../../db/sequelize.ts";
-
+import Field from "../field/field.model.ts";
 const Client = sequelize.define(
   "Client",
   {
@@ -36,5 +36,16 @@ const Client = sequelize.define(
     timestamps: false,
   }
 );
+
+Field.belongsTo(Client, {
+  as: "client",
+  foreignKey: "clientId",
+  targetKey: "id",
+});
+Client.hasMany(Field, {
+  as: "fields",
+  foreignKey: "clientId",
+  sourceKey: "id",
+});
 
 export default Client;
