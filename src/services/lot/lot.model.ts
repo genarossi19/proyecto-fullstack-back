@@ -1,12 +1,11 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../../db/sequelize.ts";
-import Lot from "../lot/lot.model.ts";
 
-const Field = sequelize.define(
-  "Field",
+const Lot = sequelize.define(
+  "Lot",
   {
     id: {
-      type: DataTypes.BIGINT, // coincide con int8 de Postgres
+      type: DataTypes.BIGINT,
       primaryKey: true,
       autoIncrement: true,
       allowNull: false,
@@ -26,30 +25,19 @@ const Field = sequelize.define(
     long: {
       type: DataTypes.FLOAT,
     },
-    clientId: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-    },
     active: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
+    fieldId: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+    },
   },
   {
-    tableName: "field",
+    tableName: "lot",
     timestamps: false,
   }
 );
 
-Lot.belongsTo(Field, {
-  as: "field",
-  foreignKey: "fieldId",
-  targetKey: "id",
-});
-Field.hasMany(Lot, {
-  as: "lots",
-  foreignKey: "fieldId",
-  sourceKey: "id",
-});
-
-export default Field;
+export default Lot;
