@@ -4,6 +4,6 @@ export interface FieldType {
   area: number;
   lat: number;
   long: number;
-  clientId: number;
   active: boolean;
+  clientId: number;
 }

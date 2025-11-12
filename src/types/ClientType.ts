@@ -1,9 +1,9 @@
 export interface ClientType {
   id: number;
-  CUIT: string;
   name: string;
+  CUIT: number;
+  active: boolean;
   email: string;
   phone: string;
   address: string;
-  active: boolean;
 }
