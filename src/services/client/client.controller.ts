@@ -70,7 +70,7 @@ const createClient = async (req: Request, res: Response) => {
 // PUT/PATCH Actualizar cliente
 const updateClient = async (req: Request, res: Response) => {
   try {
-    const id = parseInt(req.params.id, 10);
+    const id = Number(req.params.id);
     const client = await Client.findByPk(id);
     if (!client)
       return res.status(404).json({ error: "Cliente no encontrado" });
@@ -88,7 +88,7 @@ const updateClient = async (req: Request, res: Response) => {
 // DELETE Eliminar cliente
 const deleteClient = async (req: Request, res: Response) => {
   try {
-    const id = parseInt(req.params.id, 10);
+    const id = Number(req.params.id);
     const client = await Client.findByPk(id);
     if (!client)
       return res.status(404).json({ error: "Cliente no encontrado" });
