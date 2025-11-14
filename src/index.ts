@@ -1,10 +1,12 @@
 import express from "express";
+import adminRouter from "./admin/admin.router.ts";
 import type { Request, Response } from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import clientRoute from "./services/client/client.route.ts";
 import fieldRoute from "./services/field/field.route.ts";
 import lotRoute from "./services/lot/lot.route.ts";
+import machineryRoute from "../src/services/machinery/machinery.route.ts";
 // Configura dotenv
 dotenv.config();
 
@@ -18,6 +20,8 @@ app.use(express.json());
 // "dev" = formato colorido y compacto ideal para desarrollo
 app.use(morgan("dev"));
 
+app.use("/admin", adminRouter);
+
 // Ejemplo de ruta
 app.get("/", (req: Request, res: Response) => {
   res.status(200).send("Hello World");
@@ -26,6 +30,7 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api/client", clientRoute);
 app.use("/api/field", fieldRoute);
 app.use("/api/lot", lotRoute);
+app.use("/api/machinery", machineryRoute);
 // Inicia el servidor
 app
   .listen(PORT, () => {
