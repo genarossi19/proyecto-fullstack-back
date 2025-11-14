@@ -1,7 +1,8 @@
-import { DataTypes } from "sequelize";
-import sequelize from "../../db/sequelize";
+import { DataTypes, Model } from "sequelize";
+import sequelize from "../../db/sequelize.ts";
+import type { MachineryType } from "../../types/MachineryType.ts";
 
-const Machinery = sequelize.define(
+const Machinery = sequelize.define<Model<MachineryType>>(
   "Machinery",
   {
     id: {
@@ -13,35 +14,41 @@ const Machinery = sequelize.define(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        length: [2, 100],
-      },
+      validate: { len: [2, 100] },
     },
     type: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        length: [2, 50],
-      },
+      validate: { len: [2, 50] },
     },
     brand: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        length: [2, 50],
-      },
     },
     model: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        length: [2, 50],
-      },
+      validate: { len: [2, 50] },
     },
   },
   {
     tableName: "machinery",
     timestamps: false,
+    hooks: {
+      beforeCreate: (machinery) => {
+        const rawType = machinery.getDataValue("type");
+        if (rawType) {
+          machinery.setDataValue("type", rawType.trim().toUpperCase());
+        }
+      },
+      beforeUpdate: (machinery) => {
+        const rawType = machinery.getDataValue("type");
+        if (rawType) {
+          machinery.setDataValue("type", rawType.trim().toUpperCase());
+        }
+      },
+    },
   }
 );
+
 export default Machinery;

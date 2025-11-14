@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../../db/sequelize";
+import sequelize from "../../db/sequelize.ts";
 
 const Service = sequelize.define(
   "Service",
@@ -13,9 +13,6 @@ const Service = sequelize.define(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        length: [2, 20],
-      },
     },
   },
   {

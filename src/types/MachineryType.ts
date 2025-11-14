@@ -1,5 +1,5 @@
 export interface MachineryType {
-  id: number;
+  id?: number;
   name: string;
   type: string;
   brand: string;
