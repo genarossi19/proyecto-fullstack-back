@@ -11,6 +11,9 @@ import Field from "../services/field/field.model.ts";
 import Lot from "../services/lot/lot.model.ts";
 import Service from "../services/service/service.model.ts";
 import Machinery from "../services/machinery/machinery.model.ts";
+import MachineryDetail from "../services/workOrder/details/machineryDetail/machineryDetail.model.ts";
+import LotDetail from "../services/workOrder/details/lotDetail/lotDetail.model.ts";
+import WorkOrder from "../services/workOrder/workOrder.model.ts";
 
 // Registra el adaptador Sequelize
 AdminJS.registerAdapter(AdminJSSequelize);
@@ -104,6 +107,96 @@ const adminJs = new AdminJS({
       options: {
         listProperties: ["id", "name", "type", "brand", "model"],
         showProperties: ["id", "name", "type", "brand", "model"],
+      },
+    },
+    {
+      resource: WorkOrder,
+      options: {
+        listProperties: [
+          "id",
+          "name",
+          "created_at",
+          "init_date",
+          "finish_date",
+          "status",
+          "clientId",
+          "fieldId",
+          "serviceId",
+          "price",
+        ],
+        showProperties: [
+          "id",
+          "name",
+          "created_at",
+          "init_date",
+          "finish_date",
+          "status",
+          "observation",
+          "price",
+          "clientId",
+          "fieldId",
+          "serviceId",
+        ],
+        actions: {
+          exportWorkOrderCSV: {
+            actionType: "record",
+            icon: "Document",
+            label: "Export WorkOrder CSV",
+            handler: async (
+              request: ActionRequest,
+              response: Response,
+              context: ActionContext
+            ) => {
+              const workOrder = context.record;
+              if (!workOrder) throw new Error("WorkOrder no encontrada");
+
+              // Traer detalles de maquinaria
+              const machineryDetails = await MachineryDetail.findAll({
+                where: { workOrderId: workOrder.param("id") },
+                include: ["machinery"],
+              });
+
+              // Traer detalles de lotes
+              const lotDetails = await LotDetail.findAll({
+                where: { workOrderId: workOrder.param("id") },
+                include: ["lot"],
+              });
+
+              // Convertir a CSV
+              const parser = new Parser();
+              const csvMachinery = parser.parse(
+                machineryDetails.map((d) => d.toJSON())
+              );
+              const csvLots = parser.parse(lotDetails.map((d) => d.toJSON()));
+
+              // Aquí podrías devolver ambos CSV separados, o combinarlos
+              response.setHeader("Content-Type", "text/csv");
+              response.setHeader(
+                "Content-Disposition",
+                `attachment; filename=workorder_${workOrder.param(
+                  "id"
+                )}_details.csv`
+              );
+              response.send(csvMachinery + "\n\n" + csvLots);
+
+              return {};
+            },
+          },
+        },
+      },
+    },
+    {
+      resource: MachineryDetail,
+      options: {
+        listProperties: ["id", "workOrderId", "machineryId"],
+        showProperties: ["id", "workOrderId", "machineryId"],
+      },
+    },
+    {
+      resource: LotDetail,
+      options: {
+        listProperties: ["id", "workOrderId", "lotId", "area", "lat", "long"],
+        showProperties: ["id", "workOrderId", "lotId", "area", "lat", "long"],
       },
     },
   ],

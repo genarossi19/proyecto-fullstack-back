@@ -7,6 +7,9 @@ import clientRoute from "./services/client/client.route.ts";
 import fieldRoute from "./services/field/field.route.ts";
 import lotRoute from "./services/lot/lot.route.ts";
 import machineryRoute from "../src/services/machinery/machinery.route.ts";
+import workOrderRouter from "./services/workOrder/workOrder.route.ts";
+import lotDetailRouter from "./services/workOrder/details/lotDetail/lotDetail.route.ts";
+import machineryDetailRouter from "./services/workOrder/details/machineryDetail/machineryDetail.route.ts";
 // Configura dotenv
 dotenv.config();
 
@@ -31,6 +34,9 @@ app.use("/api/client", clientRoute);
 app.use("/api/field", fieldRoute);
 app.use("/api/lot", lotRoute);
 app.use("/api/machinery", machineryRoute);
+app.use("/api/workOrders", workOrderRouter);
+app.use("/api/workOrders/:id/lotDetails", lotDetailRouter);
+app.use("/api/workOrders/:id/machineryDetails", machineryDetailRouter);
 // Inicia el servidor
 app
   .listen(PORT, () => {

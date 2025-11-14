@@ -1,42 +1,48 @@
-import { DataTypes } from "sequelize";
-import sequelize from "../../db/sequelize";
-import Client from "../client/client.model";
-import Service from "../service/service.model";
-import Field from "../field/field.model";
+import { DataTypes, Model } from "sequelize";
+import sequelize from "../../db/sequelize.ts";
+import Client from "../client/client.model.ts";
+import Service from "../service/service.model.ts";
+import Field from "../field/field.model.ts";
+import type { WorkOrderType } from "../../types/WorkOrder.ts";
 
-const WorkOrder = sequelize.define(
+const WorkOrder = sequelize.define<Model<WorkOrderType>>(
   "WorkOrder",
   {
     id: {
       type: DataTypes.BIGINT,
       primaryKey: true,
       autoIncrement: true,
+    },
+    name: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
-    createdAt: {
+    created_at: {
       type: DataTypes.DATE,
       allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
     init_date: {
       type: DataTypes.DATE,
+      allowNull: true,
     },
     finish_date: {
       type: DataTypes.DATE,
+      allowNull: true,
     },
     status: {
       type: DataTypes.STRING,
+      allowNull: true,
     },
-    observations: {
+    observation: {
       type: DataTypes.TEXT,
+      allowNull: true,
     },
     price: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.DECIMAL,
+      allowNull: true,
     },
     clientId: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-    },
-    serviceId: {
       type: DataTypes.BIGINT,
       allowNull: false,
     },
@@ -44,10 +50,13 @@ const WorkOrder = sequelize.define(
       type: DataTypes.BIGINT,
       allowNull: false,
     },
+    serviceId: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+    },
   },
-
   {
-    tableName: "work_order",
+    tableName: "workorder",
     timestamps: false,
   }
 );
