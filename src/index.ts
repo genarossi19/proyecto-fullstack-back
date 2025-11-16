@@ -10,6 +10,8 @@ import machineryRoute from "../src/services/machinery/machinery.route.ts";
 import workOrderRouter from "./services/workOrder/workOrder.route.ts";
 import lotDetailRouter from "./services/workOrder/details/lotDetail/lotDetail.route.ts";
 import machineryDetailRouter from "./services/workOrder/details/machineryDetail/machineryDetail.route.ts";
+import rateLimit from "express-rate-limit";
+import userRouter from "./services/user/user.route.ts";
 import cors from "cors";
 // Configura dotenv
 dotenv.config();
@@ -45,6 +47,7 @@ app.use("/api/machinery", machineryRoute);
 app.use("/api/workOrders", workOrderRouter);
 app.use("/api/workOrders/:id/lotDetails", lotDetailRouter);
 app.use("/api/workOrders/:id/machineryDetails", machineryDetailRouter);
+app.use("/api/users", userRouter);
 // Inicia el servidor
 app
   .listen(PORT, () => {
