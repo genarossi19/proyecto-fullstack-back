@@ -10,6 +10,7 @@ import machineryRoute from "../src/services/machinery/machinery.route.ts";
 import workOrderRouter from "./services/workOrder/workOrder.route.ts";
 import lotDetailRouter from "./services/workOrder/details/lotDetail/lotDetail.route.ts";
 import machineryDetailRouter from "./services/workOrder/details/machineryDetail/machineryDetail.route.ts";
+import cors from "cors";
 // Configura dotenv
 dotenv.config();
 
@@ -18,6 +19,13 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware para parsear JSON (recomendado si tendrás POST/PUT)
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 // Configura morgan como logger
 // "dev" = formato colorido y compacto ideal para desarrollo

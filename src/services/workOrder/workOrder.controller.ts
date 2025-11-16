@@ -10,12 +10,15 @@ import type {
   WorkOrderSummaryResponse,
   WorkOrderType,
 } from "src/types/WorkOrder.ts";
+import sequelize from "../../db/sequelize.ts";
 
 // Crear una nueva WorkOrder con detalles opcionales
 export const createWorkOrder = async (req: Request, res: Response) => {
+  const t = await sequelize.transaction();
+
   try {
     const {
-      name,
+      name, // lo ignoramos, se genera automático
       init_date,
       finish_date,
       status,
@@ -28,57 +31,71 @@ export const createWorkOrder = async (req: Request, res: Response) => {
       lotDetails,
     } = req.body;
 
-    // Crear la WorkOrder principal
-    const newWorkOrder = await WorkOrder.create({
-      name,
-      clientId,
-      fieldId,
-      serviceId,
-      created_at: new Date(),
-      init_date,
-      finish_date,
-      status,
-      observation,
-      price,
-    });
+    // 1) Crear WorkOrder SIN name, dentro de la transacción
+    const newWorkOrder = await WorkOrder.create(
+      {
+        clientId,
+        fieldId,
+        serviceId,
+        created_at: new Date(),
+        init_date,
+        finish_date,
+        status,
+        observation,
+        price,
+      },
+      { transaction: t }
+    );
 
     const workOrderId = newWorkOrder.get("id") as number;
 
-    // Crear detalles de maquinaria si vienen en el body
-    if (machineryDetails?.length) {
+    // 2) Generar name y actualizar dentro de la MISMA transacción
+    const generatedName = `OT-${String(workOrderId).padStart(3, "0")}`;
+    await newWorkOrder.update({ name: generatedName }, { transaction: t });
+
+    // 3) Crear detalles de maquinaria dentro de la transacción
+    if (Array.isArray(machineryDetails) && machineryDetails.length) {
       for (const md of machineryDetails) {
-        await MachineryDetail.create({
-          workOrderId,
-          machineryId: md.machineryId,
-        });
+        await MachineryDetail.create(
+          {
+            workOrderId,
+            machineryId: md.machineryId,
+          },
+          { transaction: t }
+        );
       }
     }
 
-    // Crear detalles de lotes si vienen en el body
-    if (lotDetails?.length) {
+    // 4) Crear detalles de lote dentro de la transacción
+    if (Array.isArray(lotDetails) && lotDetails.length) {
       for (const ld of lotDetails) {
-        await LotDetail.create({
-          workOrderId,
-          lotId: ld.lotId,
-          area: ld.area,
-          lat: ld.lat,
-          long: ld.long,
-        });
+        await LotDetail.create(
+          {
+            workOrderId,
+            lotId: ld.lotId,
+            area: ld.area,
+            lat: ld.lat,
+            long: ld.long,
+          },
+          { transaction: t }
+        );
       }
     }
 
-    // Traer los detalles creados para devolver al front
+    // 5) Commit — todo fue exitoso
+    await t.commit();
+
+    // 6) Obtener los detalles ya creados (fuera de la transacción)
     const createdMachineryDetails = await MachineryDetail.findAll({
       where: { workOrderId },
     });
-
     const createdLotDetails = await LotDetail.findAll({
       where: { workOrderId },
     });
 
-    // Construir el objeto de respuesta limpio
     const workOrderPlain = newWorkOrder.get({ plain: true });
-    const response = {
+
+    return res.status(201).json({
       id: workOrderPlain.id,
       name: workOrderPlain.name,
       created_at: workOrderPlain.created_at,
@@ -92,12 +109,12 @@ export const createWorkOrder = async (req: Request, res: Response) => {
       serviceId: workOrderPlain.serviceId,
       machineryDetails: createdMachineryDetails,
       lotDetails: createdLotDetails,
-    };
-
-    res.status(201).json(response);
+    });
   } catch (error) {
+    // rollback garantiza que NO quede OT sin name
+    await t.rollback();
     console.error("Error al crear la WorkOrder:", error);
-    res.status(500).json({ error: "Error al crear la WorkOrder" });
+    return res.status(500).json({ error: "Error al crear la WorkOrder" });
   }
 };
 
@@ -109,7 +126,7 @@ export const getAllWorkOrders = async (
   try {
     const workOrders = await WorkOrder.findAll({
       include: [
-        { model: Client, attributes: ["id", "name", "email"] },
+        { model: Client, attributes: ["id", "name"] },
         { model: Field, attributes: ["id", "name", "area"] },
         { model: Service, attributes: ["id", "name"] },
       ],
@@ -120,12 +137,13 @@ export const getAllWorkOrders = async (
       return {
         id: plain.id,
         name: plain.name,
+        service: plain.Service,
+        status: plain.status,
+        init_date: plain.init_date,
+        finish_date: plain.finish_date,
+        created_at: plain.created_at,
         client: plain.Client,
         field: plain.Field,
-        service: plain.Service,
-        init_date: plain.init_date,
-        status: plain.status,
-        price: plain.price,
       };
     });
 

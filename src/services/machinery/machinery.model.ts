@@ -30,6 +30,21 @@ const Machinery = sequelize.define<Model<MachineryType>>(
       allowNull: false,
       validate: { len: [2, 50] },
     },
+    patent: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    status: {
+      type: DataTypes.ENUM(
+        "En Uso",
+        "Mantenimiento",
+        "Disponible",
+        "Fuera de Servicio"
+      ),
+      allowNull: false,
+      defaultValue: "Disponible",
+    },
   },
   {
     tableName: "machinery",

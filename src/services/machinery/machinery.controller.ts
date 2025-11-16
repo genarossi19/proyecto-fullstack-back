@@ -6,7 +6,7 @@ const normalizeType = (type: string) => type.trim().toUpperCase();
 
 export const createMachinery = async (req: Request, res: Response) => {
   try {
-    const { name, type, brand, model } = req.body;
+    const { name, type, brand, model, patent } = req.body;
 
     if (!name || !type || !brand || !model) {
       return res.status(400).json({ error: "Todos los campos son requeridos" });
@@ -17,6 +17,8 @@ export const createMachinery = async (req: Request, res: Response) => {
       type: normalizeType(type),
       brand,
       model,
+      status: "Disponible",
+      patent,
     });
 
     res.status(201).json(newMachinery);

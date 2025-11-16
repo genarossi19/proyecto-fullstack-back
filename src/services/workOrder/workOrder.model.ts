@@ -5,7 +5,9 @@ import Service from "../service/service.model.ts";
 import Field from "../field/field.model.ts";
 import type { WorkOrderType } from "../../types/WorkOrder.ts";
 
-const WorkOrder = sequelize.define<Model<WorkOrderType>>(
+const WorkOrder = sequelize.define<
+  Model<WorkOrderType, Omit<WorkOrderType, "name">>
+>(
   "WorkOrder",
   {
     id: {
@@ -15,7 +17,7 @@ const WorkOrder = sequelize.define<Model<WorkOrderType>>(
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     created_at: {
       type: DataTypes.DATE,

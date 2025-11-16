@@ -2,7 +2,7 @@ import type { ClientType } from "./ClientType.ts";
 
 export interface WorkOrderType {
   id?: number;
-  name: string;
+  name?: string;
   created_at: Date;
   init_date: Date;
   finish_date: Date;
@@ -62,8 +62,8 @@ export interface WorkOrderSummaryResponse {
     name: string;
   };
   init_date: Date | null;
+  finish_date: Date | null;
   status: string | null;
-  price: number | null;
 }
 
 export interface WorkOrderDetailResponse {
@@ -91,6 +91,7 @@ export interface WorkOrderDetailResponse {
     id: number;
     name: string;
   };
+
   machineryDetails: any[];
   lotDetails: any[];
 }
