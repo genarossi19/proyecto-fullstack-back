@@ -37,7 +37,7 @@ const LotDetail = sequelize.define<Model<LotDetailType>>(
 );
 
 LotDetail.belongsTo(WorkOrder, { foreignKey: "workOrderId" });
-LotDetail.belongsTo(Lot, { foreignKey: "lotId" });
+LotDetail.belongsTo(Lot, { as: "lot", foreignKey: "lotId" });
 
 WorkOrder.hasMany(LotDetail, { foreignKey: "workOrderId" });
 

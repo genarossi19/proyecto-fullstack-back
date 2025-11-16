@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import Lot from "./lot.model.ts";
 import Field from "../field/field.model.ts";
+import Client from "../client/client.model.ts";
 
 // Crear un nuevo lote
 export const createLot = async (req: Request, res: Response) => {
@@ -27,12 +28,23 @@ export const createLot = async (req: Request, res: Response) => {
 export const getAllLots = async (req: Request, res: Response) => {
   try {
     const lots = await Lot.findAll({
-      include: {
-        model: Field,
-        as: "field",
-        attributes: ["id", "name"],
-      },
+      attributes: ["id", "name", "area", "lat", "long"], // solo atributos de lot
+      include: [
+        {
+          model: Field,
+          as: "field",
+          attributes: ["id", "name"], // solo atributos de field
+          include: [
+            {
+              model: Client,
+              as: "client",
+              attributes: ["id", "name"], // solo atributos de client
+            },
+          ],
+        },
+      ],
     });
+
     res.status(200).json(lots);
   } catch (error) {
     console.error("Error al obtener los lotes:", error);
@@ -40,17 +52,26 @@ export const getAllLots = async (req: Request, res: Response) => {
   }
 };
 
-// Obtener un lote por ID
 export const getLotById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
     const lot = await Lot.findByPk(id, {
-      include: {
-        model: Field,
-        as: "field",
-        attributes: ["id", "name"],
-      },
+      attributes: ["id", "name", "area", "lat", "long"], // solo atributos de lot
+      include: [
+        {
+          model: Field,
+          as: "field",
+          attributes: ["id", "name"], // solo atributos de field
+          include: [
+            {
+              model: Client,
+              as: "client",
+              attributes: ["id", "name"], // solo atributos de client
+            },
+          ],
+        },
+      ],
     });
 
     if (!lot) {
