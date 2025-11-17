@@ -57,12 +57,12 @@ export const userLogin = async (req: Request, res: Response) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      sameSite: "strict",
       maxAge: 60 * 60 * 1000, // 1 hour
     });
 
-    // Return user info (without token) in body
-    res.json({ user: result.user });
+    // Return user info with token (token for debugging, cookie for storage)
+    res.json({ user: result.user, token });
   } catch (error) {
     const message = (error as Error).message ?? String(error);
     res.status(401).json({ error: message });
@@ -74,7 +74,7 @@ export const userLogout = async (req: Request, res: Response) => {
   res.clearCookie("token", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    sameSite: "strict",
   });
   res.json({ ok: true });
 };
