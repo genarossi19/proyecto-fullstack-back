@@ -11,6 +11,8 @@ import type {
   WorkOrderType,
 } from "src/types/WorkOrder.ts";
 import sequelize from "../../db/sequelize.ts";
+import Machinery from "../machinery/machinery.model.ts";
+import Lot from "../lot/lot.model.ts";
 
 // Crear una nueva WorkOrder con detalles opcionales
 export const createWorkOrder = async (req: Request, res: Response) => {
@@ -159,6 +161,7 @@ export const getWorkOrderById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
+    // Traer WorkOrder con relaciones
     const workOrder = await WorkOrder.findByPk(id, {
       include: [
         { model: Client, attributes: ["id", "name", "email"] },
@@ -171,29 +174,65 @@ export const getWorkOrderById = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "WorkOrder no encontrada" });
     }
 
-    const machineryDetails = await MachineryDetail.findAll({
-      where: { workOrderId: workOrder.get("id") as number },
+    // Convertir a objeto plano para acceder a relaciones
+    const workOrderPlain: any = workOrder.get({ plain: true });
+
+    // Detalles de maquinaria con alias
+    const machineryDetailsRaw = await MachineryDetail.findAll({
+      where: { workOrderId: workOrderPlain.id },
+      include: [
+        {
+          model: Machinery,
+          as: "machinery",
+          attributes: [
+            "id",
+            "name",
+            "type",
+            "brand",
+            "model",
+            "patent",
+            "status",
+          ],
+        },
+      ],
     });
 
-    const lotDetails = await LotDetail.findAll({
-      where: { workOrderId: workOrder.get("id") as number },
+    // Detalles de lotes con alias
+    const lotDetailsRaw = await LotDetail.findAll({
+      where: { workOrderId: workOrderPlain.id },
+      include: [
+        {
+          model: Lot,
+          as: "lot",
+          attributes: ["id", "name", "area", "lat", "long"],
+        },
+      ],
     });
 
-    const plainWorkOrder = workOrder.get({ plain: true }) as any;
+    // Mapear detalles al tipo esperado
+    const machineryDetails = machineryDetailsRaw.map((md) => {
+      const plainMd: any = md.get({ plain: true });
+      return { id: plainMd.id, machinery: plainMd.machinery };
+    });
 
-    // Devolver objeto completo sin IDs redundantes
+    const lotDetails = lotDetailsRaw.map((ld) => {
+      const plainLd: any = ld.get({ plain: true });
+      return { id: plainLd.id, lot: plainLd.lot };
+    });
+
+    // Construir respuesta final
     const response: WorkOrderDetailResponse = {
-      id: plainWorkOrder.id,
-      name: plainWorkOrder.name,
-      created_at: plainWorkOrder.created_at,
-      init_date: plainWorkOrder.init_date,
-      finish_date: plainWorkOrder.finish_date,
-      status: plainWorkOrder.status,
-      observation: plainWorkOrder.observation,
-      price: plainWorkOrder.price,
-      client: plainWorkOrder.Client,
-      field: plainWorkOrder.Field,
-      service: plainWorkOrder.Service,
+      id: workOrderPlain.id,
+      name: workOrderPlain.name,
+      created_at: workOrderPlain.created_at,
+      init_date: workOrderPlain.init_date,
+      finish_date: workOrderPlain.finish_date,
+      status: workOrderPlain.status,
+      observation: workOrderPlain.observation,
+      price: workOrderPlain.price,
+      client: workOrderPlain.Client,
+      field: workOrderPlain.Field,
+      service: workOrderPlain.Service,
       machineryDetails,
       lotDetails,
     };

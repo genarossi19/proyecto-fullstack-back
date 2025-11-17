@@ -32,7 +32,10 @@ MachineryDetail.belongsTo(WorkOrder, {
   foreignKey: "workOrderId",
   onDelete: "CASCADE",
 });
-MachineryDetail.belongsTo(Machinery, { foreignKey: "machineryId" });
+MachineryDetail.belongsTo(Machinery, {
+  as: "machinery",
+  foreignKey: "machineryId",
+});
 WorkOrder.hasMany(MachineryDetail, {
   foreignKey: "workOrderId",
   onDelete: "CASCADE",
