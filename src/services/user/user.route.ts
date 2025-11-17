@@ -3,6 +3,7 @@ import { authenticateToken } from "../../middleware/auth.ts";
 import {
   updateUser,
   userLogin,
+  userLogout,
   getUsers,
   getUserById,
   createUser,
@@ -32,9 +33,17 @@ userRouter.get("/:id", authenticateToken, getUserById);
 // === POST /api/users/login ===
 userRouter.post("/login", authLimiter, userLogin);
 
+// === POST /api/users/logout ===
+userRouter.post("/logout", userLogout);
+
+// === GET /api/users/me ===
+userRouter.get("/me", authenticateToken, (req, res) =>
+  res.status(200).json({ user: (req as any).user })
+);
+
 // === POST /api/users ===
 // Crear nuevo usuario con limitador
-userRouter.post("/", createUserLimiter, validateCreateUser, createUser);
+userRouter.post("/signup", createUserLimiter, validateCreateUser, createUser);
 
 // === PUT /api/users/:id ===
 userRouter.put("/:id", authenticateToken, validateUpdateUser, updateUser);

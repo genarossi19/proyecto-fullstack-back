@@ -10,9 +10,9 @@ import machineryRoute from "../src/services/machinery/machinery.route.ts";
 import workOrderRouter from "./services/workOrder/workOrder.route.ts";
 import lotDetailRouter from "./services/workOrder/details/lotDetail/lotDetail.route.ts";
 import machineryDetailRouter from "./services/workOrder/details/machineryDetail/machineryDetail.route.ts";
-import rateLimit from "express-rate-limit";
 import userRouter from "./services/user/user.route.ts";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 // Configura dotenv
 dotenv.config();
 
@@ -21,6 +21,8 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware para parsear JSON (recomendado si tendrás POST/PUT)
 app.use(express.json());
+// cookie-parser para leer cookies (req.cookies)
+app.use(cookieParser());
 
 app.use(
   cors({

@@ -51,11 +51,42 @@ export const userLogin = async (req: Request, res: Response) => {
     }
 
     const result = await login(email, password);
-    res.json(result);
+
+    // Set token as httpOnly cookie
+    const token = result.token;
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 1000, // 1 hour
+    });
+
+    // Return user info (without token) in body
+    res.json({ user: result.user });
   } catch (error) {
     const message = (error as Error).message ?? String(error);
     res.status(401).json({ error: message });
   }
+};
+
+// Logout: clear cookie
+export const userLogout = async (req: Request, res: Response) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+  });
+  res.json({ ok: true });
+};
+
+// GET current user (from authenticateToken middleware)
+export const currentUser = async (
+  req: Request & { user?: { id?: number | string } },
+  res: Response
+) => {
+  const user = (req as any).user;
+  if (!user) return res.status(401).json({ error: "No autenticado" });
+  res.json({ user });
 };
 
 // UPDATE USER (solo si es el dueño del token)
