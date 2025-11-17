@@ -93,12 +93,18 @@ const updateField = async (req: Request, res: Response) => {
 const deleteField = async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
+
     const field = await Field.findByPk(id);
-    if (!field)
+    if (!field) {
       return res.status(404).json({ error: "No se encontro el campo" });
+    }
+
     await field.destroy();
+
+    return res.status(200).json({ message: "Campo eliminado correctamente" });
   } catch (error) {
-    res.status(500).json({ error: "Error al eliminar el campo" });
+    console.error("Error al eliminar el campo:", error);
+    return res.status(500).json({ error: "Error al eliminar el campo" });
   }
 };
 

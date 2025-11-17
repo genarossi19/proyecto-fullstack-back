@@ -1,21 +1,41 @@
 import { Router } from "express";
 import machineryController from "./machinery.controller.ts";
-
+import { authenticateToken } from "../../middleware/auth.ts";
 const machineryRouter = Router();
 
 // Crear nueva maquinaria
-machineryRouter.post("/", machineryController.createMachinery);
+machineryRouter.post(
+  "/",
+  authenticateToken,
+  machineryController.createMachinery
+);
 
 // Obtener todas las maquinarias
-machineryRouter.get("/", machineryController.getAllMachinery);
+machineryRouter.get(
+  "/",
+  authenticateToken,
+  machineryController.getAllMachinery
+);
 
 // Obtener maquinaria por ID
-machineryRouter.get("/:id", machineryController.getMachineryById);
+machineryRouter.get(
+  "/:id",
+  authenticateToken,
+  machineryController.getMachineryById
+);
 
 // Actualizar maquinaria
-machineryRouter.put("/:id", machineryController.updateMachinery);
+machineryRouter.put(
+  "/:id",
+  authenticateToken,
+  machineryController.updateMachinery
+);
 
 // Eliminar maquinaria
-machineryRouter.delete("/:id", machineryController.deleteMachinery);
+machineryRouter.delete(
+  "/:id",
+  authenticateToken,
+  machineryController.deleteMachinery
+);
 
 export default machineryRouter;

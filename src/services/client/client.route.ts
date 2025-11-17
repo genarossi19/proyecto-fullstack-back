@@ -1,14 +1,15 @@
 // routes/clientRoutes.ts
 import { Router } from "express";
 import clientController from "../client/client.controller.ts";
+import { authenticateToken } from "../../middleware/auth.ts";
 
 const router = Router();
 
 // CRUD básico apuntando a controller
-router.get("/", clientController.getAllClients); // Obtener todos
-router.get("/:id", clientController.getClientWithFields); // Obtener por ID con el objeto de field
-router.post("/", clientController.createClient); // Crear
-router.put("/:id", clientController.updateClient); // Actualizar
-router.delete("/:id", clientController.deleteClient); // Eliminar
+router.get("/", authenticateToken, clientController.getAllClients); // Obtener todos
+router.get("/:id", authenticateToken, clientController.getClientWithFields); // Obtener por ID con el objeto de field
+router.post("/", authenticateToken, clientController.createClient); // Crear
+router.put("/:id", authenticateToken, clientController.updateClient); // Actualizar
+router.delete("/:id", authenticateToken, clientController.deleteClient); // Eliminar
 
 export default router;
