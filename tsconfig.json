@@ -7,14 +7,17 @@
 
     /* === Target y módulo === */
     "target": "ES2020",
-    "module": "NodeNext", // Compatible con type: module
+    "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "esModuleInterop": true, // Permite importar librerías como express
-    "resolveJsonModule": true, // Para importar JSON
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
 
+    /* === Salida === */
+    "noEmit": false,
+
     /* === Tipos y librerías === */
-    "strict": true, // Chequeo estricto
+    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "types": ["node", "express"],
@@ -24,9 +27,10 @@
     "declarationMap": true,
     "sourceMap": true,
 
-    /* === Otras útiles === */
+    /* === Other === */
     "noImplicitAny": true
   },
+
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }
