@@ -5,14 +5,12 @@
   "license": "ISC",
   "author": "",
   "type": "module",
-  "main": "index.ts",
-"scripts": {
-  "dev": "tsx watch ./src/index.ts",
-  "build": "tsc",
-  "start": "node ./dist/index.js",
-  "preview": "npm run build && npm start"
-}
-,
+  "scripts": {
+    "dev": "tsx watch ./src/index.ts",
+    "build": "tsc",
+    "start": "node ./dist/index.js",
+    "preview": "npm run build && npm start"
+  },
   "engines": {
     "node": "22.16.0"
   },
@@ -25,6 +23,7 @@
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
+    "express": "^5.1.0",
     "express-rate-limit": "^8.2.1",
     "joi": "^18.0.1",
     "json2csv": "^6.0.0-alpha.2",
@@ -45,7 +44,6 @@
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.10.1",
     "@types/sequelize": "^4.28.20",
-    "express": "^5.1.0",
     "nodemon": "^3.1.11",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
