@@ -1,6 +1,6 @@
 import express from "express";
 import adminRouter from "./admin/admin.router.js";
-import type { Request, Response } from "express";
+
 import dotenv from "dotenv";
 import morgan from "morgan";
 import clientRoute from "./services/client/client.route.js";
@@ -38,7 +38,7 @@ app.use(morgan("dev"));
 app.use("/admin", adminRouter);
 
 // Ejemplo de ruta
-app.get("/", (req: Request, res: Response) => {
+app.get("/", (req, res) => {
   res.status(200).send("Hello World");
 });
 
