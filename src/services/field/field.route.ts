@@ -1,6 +1,6 @@
 import { Router } from "express";
-import fieldController from "./field.controller.ts";
-import { authenticateToken } from "../../middleware/auth.ts";
+import fieldController from "./field.controller.js";
+import { authenticateToken } from "../../middleware/auth.js";
 const router = Router();
 
 // CRUD básico apuntando a controller

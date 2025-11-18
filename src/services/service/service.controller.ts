@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Service from "./service.model.ts";
+import Service from "./service.model.js";
 
 // Crear un nuevo servicio
 export const createService = async (req: Request, res: Response) => {

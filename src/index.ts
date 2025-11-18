@@ -1,16 +1,16 @@
 import express from "express";
-import adminRouter from "./admin/admin.router.ts";
+import adminRouter from "./admin/admin.router.js";
 import type { Request, Response } from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
-import clientRoute from "./services/client/client.route.ts";
-import fieldRoute from "./services/field/field.route.ts";
-import lotRoute from "./services/lot/lot.route.ts";
-import machineryRoute from "../src/services/machinery/machinery.route.ts";
-import workOrderRouter from "./services/workOrder/workOrder.route.ts";
-import lotDetailRouter from "./services/workOrder/details/lotDetail/lotDetail.route.ts";
-import machineryDetailRouter from "./services/workOrder/details/machineryDetail/machineryDetail.route.ts";
-import userRouter from "./services/user/user.route.ts";
+import clientRoute from "./services/client/client.route.js";
+import fieldRoute from "./services/field/field.route.js";
+import lotRoute from "./services/lot/lot.route.js";
+import machineryRoute from "./services/machinery/machinery.route.js";
+import workOrderRouter from "./services/workOrder/workOrder.route.js";
+import lotDetailRouter from "./services/workOrder/details/lotDetail/lotDetail.route.js";
+import machineryDetailRouter from "./services/workOrder/details/machineryDetail/machineryDetail.route.js";
+import userRouter from "./services/user/user.route.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 // Configura dotenv

@@ -1,6 +1,6 @@
 import { Router } from "express";
-import machineryController from "./machinery.controller.ts";
-import { authenticateToken } from "../../middleware/auth.ts";
+import machineryController from "./machinery.controller.js";
+import { authenticateToken } from "../../middleware/auth.js";
 const machineryRouter = Router();
 
 // Crear nueva maquinaria

@@ -1,6 +1,6 @@
 import express from "express";
-import serviceController from "./service.controller.ts";
-import { authenticateToken } from "../../middleware/auth.ts";
+import serviceController from "./service.controller.js";
+import { authenticateToken } from "../../middleware/auth.js";
 const serviceRouter = express.Router();
 
 // Crear un nuevo servicio

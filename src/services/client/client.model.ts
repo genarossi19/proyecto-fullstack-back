@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../../db/sequelize.ts";
-import Field from "../field/field.model.ts";
+import sequelize from "../../db/sequelize.js";
+import Field from "../field/field.model.js";
 const Client = sequelize.define(
   "Client",
   {

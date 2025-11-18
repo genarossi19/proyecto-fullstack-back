@@ -1,7 +1,7 @@
 // routes/clientRoutes.ts
 import { Router } from "express";
-import clientController from "../client/client.controller.ts";
-import { authenticateToken } from "../../middleware/auth.ts";
+import clientController from "../client/client.controller.js";
+import { authenticateToken } from "../../middleware/auth.js";
 
 const router = Router();
 

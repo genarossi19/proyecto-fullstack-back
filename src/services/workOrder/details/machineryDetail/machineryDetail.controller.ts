@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import MachineryDetail from "./machineryDetail.model.ts";
-import Machinery from "../../../machinery/machinery.model.ts";
+import MachineryDetail from "./machineryDetail.model.js";
+import Machinery from "../../../machinery/machinery.model.js";
 
 // Crear un detalle de maquinaria para una orden de trabajo
 export const createMachineryDetail = async (req: Request, res: Response) => {

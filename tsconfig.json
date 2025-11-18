@@ -12,8 +12,7 @@
     "esModuleInterop": true, // Permite importar librerías como express
     "resolveJsonModule": true, // Para importar JSON
     "allowSyntheticDefaultImports": true,
-    "noEmit": true,
-    "allowImportingTsExtensions": true,
+
     /* === Tipos y librerías === */
     "strict": true, // Chequeo estricto
     "forceConsistentCasingInFileNames": true,

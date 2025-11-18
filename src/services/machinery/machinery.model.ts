@@ -1,6 +1,6 @@
 import { DataTypes, Model } from "sequelize";
-import sequelize from "../../db/sequelize.ts";
-import type { MachineryType } from "../../types/MachineryType.ts";
+import sequelize from "../../db/sequelize.js";
+import type { MachineryType } from "../../types/MachineryType.js";
 
 const Machinery = sequelize.define<Model<MachineryType>>(
   "Machinery",

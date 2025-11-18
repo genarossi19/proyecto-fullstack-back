@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
-import User from "./user.model.ts";
-import { login } from "../../middleware/auth.ts";
-import { hashPassword } from "../../utils/auth.ts";
+import User from "./user.model.js";
+import { login } from "../../middleware/auth.js";
+import { hashPassword } from "../../utils/auth.js";
 
 // GET ALL USERS
 

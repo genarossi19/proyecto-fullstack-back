@@ -1,4 +1,4 @@
-import type { ClientType } from "./ClientType.ts";
+import type { ClientType } from "./ClientType.js";
 
 export interface WorkOrderType {
   id?: number;

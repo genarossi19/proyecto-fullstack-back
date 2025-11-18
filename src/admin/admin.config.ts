@@ -2,18 +2,18 @@ import AdminJS from "adminjs";
 import type { ActionRequest, ActionContext } from "adminjs";
 import type { Response } from "express";
 import AdminJSSequelize from "@adminjs/sequelize";
-import sequelize from "../db/sequelize.ts";
+import sequelize from "../db/sequelize.js";
 import { Parser } from "json2csv";
 
 // Importa tus modelos
-import Client from "../services/client/client.model.ts";
-import Field from "../services/field/field.model.ts";
-import Lot from "../services/lot/lot.model.ts";
-import Service from "../services/service/service.model.ts";
-import Machinery from "../services/machinery/machinery.model.ts";
-import MachineryDetail from "../services/workOrder/details/machineryDetail/machineryDetail.model.ts";
-import LotDetail from "../services/workOrder/details/lotDetail/lotDetail.model.ts";
-import WorkOrder from "../services/workOrder/workOrder.model.ts";
+import Client from "../services/client/client.model.js";
+import Field from "../services/field/field.model.js";
+import Lot from "../services/lot/lot.model.js";
+import Service from "../services/service/service.model.js";
+import Machinery from "../services/machinery/machinery.model.js";
+import MachineryDetail from "../services/workOrder/details/machineryDetail/machineryDetail.model.js";
+import LotDetail from "../services/workOrder/details/lotDetail/lotDetail.model.js";
+import WorkOrder from "../services/workOrder/workOrder.model.js";
 
 // Registra el adaptador Sequelize
 AdminJS.registerAdapter(AdminJSSequelize);

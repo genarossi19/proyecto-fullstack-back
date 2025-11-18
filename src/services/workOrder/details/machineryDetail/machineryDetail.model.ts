@@ -1,8 +1,8 @@
 import { DataTypes, Model } from "sequelize";
-import sequelize from "../../../../db/sequelize.ts";
-import WorkOrder from "../../workOrder.model.ts";
-import Machinery from "../../../machinery/machinery.model.ts";
-import type { MachineryDetailType } from "../../../../types/WorkOrder.ts";
+import sequelize from "../../../../db/sequelize.js";
+import WorkOrder from "../../workOrder.model.js";
+import Machinery from "../../../machinery/machinery.model.js";
+import type { MachineryDetailType } from "../../../../types/WorkOrder.js";
 
 const MachineryDetail = sequelize.define<Model<MachineryDetailType>>(
   "MachineryDetail",

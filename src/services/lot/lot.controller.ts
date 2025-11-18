@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
-import Lot from "./lot.model.ts";
-import Field from "../field/field.model.ts";
-import Client from "../client/client.model.ts";
+import Lot from "./lot.model.js";
+import Field from "../field/field.model.js";
+import Client from "../client/client.model.js";
 
 // Crear un nuevo lote
 export const createLot = async (req: Request, res: Response) => {

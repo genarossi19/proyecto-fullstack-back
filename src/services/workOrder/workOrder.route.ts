@@ -1,6 +1,6 @@
 import { Router } from "express";
-import workOrderController from "./workOrder.controller.ts";
-import { authenticateToken } from "../../middleware/auth.ts";
+import workOrderController from "./workOrder.controller.js";
+import { authenticateToken } from "../../middleware/auth.js";
 
 const workOrderRouter = Router();
 

@@ -1,8 +1,8 @@
 import type { Request, Response } from "express";
 
-import Field from "./field.model.ts";
-import Client from "../client/client.model.ts";
-import Lot from "../lot/lot.model.ts";
+import Field from "./field.model.js";
+import Client from "../client/client.model.js";
+import Lot from "../lot/lot.model.js";
 const getAllFields = async (req: Request, res: Response) => {
   try {
     const fields = await Field.findAll();

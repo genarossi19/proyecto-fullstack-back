@@ -1,5 +1,5 @@
 import { Router } from "express";
-import lotDetailController from "./lotDetail.controller.ts";
+import lotDetailController from "./lotDetail.controller.js";
 
 const lotDetailRouter = Router();
 

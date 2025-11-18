@@ -1,9 +1,9 @@
 // controllers/clientController.ts
 import type { Request, Response } from "express";
-import Client from "./client.model.ts";
-import Field from "../field/field.model.ts";
-import Lot from "../lot/lot.model.ts";
-import sequelize from "../../db/sequelize.ts";
+import Client from "./client.model.js";
+import Field from "../field/field.model.js";
+import Lot from "../lot/lot.model.js";
+import sequelize from "../../db/sequelize.js";
 // GET todos los clientes
 const getAllClients = async (req: Request, res: Response) => {
   try {

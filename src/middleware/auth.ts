@@ -1,11 +1,11 @@
 import type { Request, Response, NextFunction } from "express";
-import User from "../services/user/user.model.ts";
+import User from "../services/user/user.model.js";
 import {
   hashPassword,
   verifyPassword,
   generateToken,
   verifyToken,
-} from "../utils/auth.ts";
+} from "../utils/auth.js";
 import type { JwtUserPayload } from "../utils/auth.ts";
 
 // Middleware para verificar token JWT
@@ -16,9 +16,10 @@ export const authenticateToken = (
   next: NextFunction
 ): Response | void => {
   const authHeader = req.headers["authorization"];
-  const tokenFromHeader = authHeader && (authHeader as string).startsWith("Bearer ")
-    ? (authHeader as string).split(" ")[1]
-    : undefined;
+  const tokenFromHeader =
+    authHeader && (authHeader as string).startsWith("Bearer ")
+      ? (authHeader as string).split(" ")[1]
+      : undefined;
 
   // cookie-parser añade `req.cookies`
   const tokenFromCookie = (req as any).cookies?.token as string | undefined;

@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
-import LotDetail from "./lotDetail.model.ts";
-import Lot from "../../../lot/lot.model.ts";
-import WorkOrder from "../../workOrder.model.ts";
+import LotDetail from "./lotDetail.model.js";
+import Lot from "../../../lot/lot.model.js";
+import WorkOrder from "../../workOrder.model.js";
 
 // Crear un detalle de lote para una WorkOrder
 export const addLotToWorkOrder = async (req: Request, res: Response) => {

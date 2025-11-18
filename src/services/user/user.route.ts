@@ -1,5 +1,5 @@
 import express from "express";
-import { authenticateToken } from "../../middleware/auth.ts";
+import { authenticateToken } from "../../middleware/auth.js";
 import {
   updateUser,
   userLogin,
@@ -8,16 +8,16 @@ import {
   getUserById,
   createUser,
   deleteUser,
-} from "./user.controller.ts";
+} from "./user.controller.js";
 import {
   validateCreateUser,
   validateUpdateUser,
-} from "../../middleware/validation.ts";
+} from "../../middleware/validation.js";
 import {
   generalLimiter,
   authLimiter,
   createUserLimiter,
-} from "../../middleware/ratelimit.ts";
+} from "../../middleware/ratelimit.js";
 
 const userRouter = express.Router();
 

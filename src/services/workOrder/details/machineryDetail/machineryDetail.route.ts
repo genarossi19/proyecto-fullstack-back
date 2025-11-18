@@ -1,5 +1,5 @@
 import { Router } from "express";
-import machineryDetailController from "./machineryDetail.controller.ts";
+import machineryDetailController from "./machineryDetail.controller.js";
 
 const machineryDetailRouter = Router();
 

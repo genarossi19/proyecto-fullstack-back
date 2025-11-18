@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import Machinery from "./machinery.model.ts";
+import Machinery from "./machinery.model.js";
 
 // Función para normalizar el campo "type"
 const normalizeType = (type: string) => type.trim().toUpperCase();

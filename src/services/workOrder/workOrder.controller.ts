@@ -1,18 +1,18 @@
 import type { Request, Response } from "express";
-import WorkOrder from "./workOrder.model.ts";
-import Client from "../client/client.model.ts";
-import Field from "../field/field.model.ts";
-import Service from "../service/service.model.ts";
-import MachineryDetail from "./details/machineryDetail/machineryDetail.model.ts";
-import LotDetail from "./details/lotDetail/lotDetail.model.ts";
+import WorkOrder from "./workOrder.model.js";
+import Client from "../client/client.model.js";
+import Field from "../field/field.model.js";
+import Service from "../service/service.model.js";
+import MachineryDetail from "./details/machineryDetail/machineryDetail.model.js";
+import LotDetail from "./details/lotDetail/lotDetail.model.js";
 import type {
   WorkOrderDetailResponse,
   WorkOrderSummaryResponse,
   WorkOrderType,
-} from "src/types/WorkOrder.ts";
-import sequelize from "../../db/sequelize.ts";
-import Machinery from "../machinery/machinery.model.ts";
-import Lot from "../lot/lot.model.ts";
+} from "src/types/WorkOrder.js";
+import sequelize from "../../db/sequelize.js";
+import Machinery from "../machinery/machinery.model.js";
+import Lot from "../lot/lot.model.js";
 
 // Crear una nueva WorkOrder con detalles opcionales
 export const createWorkOrder = async (req: Request, res: Response) => {

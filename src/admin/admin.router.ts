@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import AdminJSExpress from "@adminjs/express";
-import adminJs from "./admin.config.ts"; // tu instancia de AdminJS
+import adminJs from "./admin.config.js"; // tu instancia de AdminJS
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL!;
 const ADMIN_HASH = process.env.ADMIN_HASH!; // hash guardado en .env

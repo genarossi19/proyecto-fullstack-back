@@ -1,8 +1,8 @@
 import { DataTypes, Model } from "sequelize";
-import sequelize from "../../../../db/sequelize.ts";
-import WorkOrder from "../../workOrder.model.ts";
-import Lot from "../../../lot/lot.model.ts";
-import type { LotDetailType } from "../../../../types/WorkOrder.ts";
+import sequelize from "../../../../db/sequelize.js";
+import WorkOrder from "../../workOrder.model.js";
+import Lot from "../../../lot/lot.model.js";
+import type { LotDetailType } from "../../../../types/WorkOrder.js";
 
 const LotDetail = sequelize.define<Model<LotDetailType>>(
   "LotDetail",

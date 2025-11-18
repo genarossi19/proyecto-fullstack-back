@@ -1,9 +1,9 @@
 import { DataTypes, Model } from "sequelize";
-import sequelize from "../../db/sequelize.ts";
-import Client from "../client/client.model.ts";
-import Service from "../service/service.model.ts";
-import Field from "../field/field.model.ts";
-import type { WorkOrderType } from "../../types/WorkOrder.ts";
+import sequelize from "../../db/sequelize.js";
+import Client from "../client/client.model.js";
+import Service from "../service/service.model.js";
+import Field from "../field/field.model.js";
+import type { WorkOrderType } from "../../types/WorkOrder.js";
 
 const WorkOrder = sequelize.define<
   Model<WorkOrderType, Omit<WorkOrderType, "name">>

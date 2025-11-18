@@ -1,4 +1,4 @@
-import sequelize from "../sequelize.ts";
+import sequelize from "../sequelize.js";
 
 (async () => {
   try {
