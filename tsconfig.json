@@ -3,7 +3,7 @@
     /* === Estructura del proyecto === */
     "baseUrl": ".",
     "rootDir": "./src",
-    "outDir": "./dist",
+    "outDir": "dist/src",
 
     /* === Target y módulo === */
     "target": "ES2020",
